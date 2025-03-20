@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #0078d7;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header p {
+            margin: 0.5rem 0 0;
+        }
+        .search-bar {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .card a {
+            display: inline-block;
+            background-color: #0078d7;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .card a:hover {
+            background-color: #005bb5;
+        }
+        .floating-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+        }
+        .floating-icon:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to My Download Page</h1>
+        <p>Created by <strong>Ivaan Srivastava</strong></p>
+    </div>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search files...">
+    </div>
+    <div class="container" id="fileContainer">
+        <!-- Cards will be dynamically generated here -->
+    </div>
+    <a href="https://github.com/ivaansrivastava" class="floating-icon" target="_blank" title="Visit My GitHub">
+        🏠
+    </a>
+
+    <script>
+        const fileContainer = document.getElementById('fileContainer');
+        const searchInput = document.getElementById('searchInput');
+
+        // List of files with their GitHub download URLs
+        const files = [
+            { name: "PYTHONDISK1", des:"My Small python projets",url: "https://github.com/ivaansrivastava/PYTHONDISKI/" },
+            { name: "Tinygames", des:"Tiny games", url: "https://github.com/ivaansrivastava/Tinygames" },
+        ];
+
+        // Generate cards for each file
+        function generateCards() {
+            fileContainer.innerHTML = ''; // Clear existing cards
+            files.forEach(file => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-name', file.name.toLowerCase());
+                card.innerHTML = `
+                    <h3>${file.name}</h3>
+                    <p>${file.des}</p>
+                    <a href="${file.url}" download="${file.name}">GO</a>
+                `;
+                fileContainer.appendChild(card);
+            });
+        }
+
+        // Filter cards based on search input
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const fileName = card.getAttribute('data-name');
+                if (fileName.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Generate cards on page load
+        generateCards();
+    </script>
+</body>
+</html>
